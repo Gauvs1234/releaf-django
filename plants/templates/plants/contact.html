@@ -1,0 +1,42 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Contact Us | Releaf{% endblock %}
+
+{% block content %}
+  <section class="page-banner contact-banner">
+    <span class="eyebrow">We’re here to help</span>
+    <h1>Let’s find a way to help you grow.</h1>
+    <p>Questions about a listing, plant care, or the Releaf community? Send us a note.</p>
+  </section>
+
+  <section class="section contact-section">
+    <div class="contact-intro">
+      <span class="eyebrow">Get in touch</span>
+      <h2>We’d love to hear from you.</h2>
+      <p>Tell us what you are looking for and the Releaf team will be in touch.</p>
+      <div class="contact-promise">
+        <span class="contact-promise-icon" aria-hidden="true">✉</span>
+        <div>
+          <h3>Send us a message</h3>
+          <p>Your note goes directly to our Releaf team for follow-up.</p>
+        </div>
+      </div>
+      <div class="contact-promise">
+        <span class="contact-promise-icon" aria-hidden="true">♧</span>
+        <div>
+          <h3>Plant questions welcome</h3>
+          <p>Ask us about listings, sharing a plant, or getting started.</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-card">
+      <h2>Write to us</h2>
+      <p class="form-intro">Fill in the form and we’ll receive your message.</p>
+      <form method="post" class="site-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button button-dark button-full" type="submit">Send your message <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

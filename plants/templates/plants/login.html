@@ -1,0 +1,16 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Log in | Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Welcome back</span>
+    <h1>Log in to Releaf</h1>
+    <form method="post" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Log in</button>
+    </form>
+    <a class="form-back-link" href="{% url 'register' %}">New to Releaf? Create an account</a>
+  </section>
+{% endblock %}

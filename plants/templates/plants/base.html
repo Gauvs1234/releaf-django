@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f8f1">
+  <title>{% block title %}Releaf | Grow together{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'plants/site.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{% url 'home' %}" aria-label="Releaf home">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <span class="brand-name">Releaf<small>grow together</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">Who we are</a>
+        <a href="{% url 'services' %}">Our services</a>
+        <a href="{% url 'contact' %}">Contact us</a>
+      </nav>
+      <div class="header-account">
+        {% if user.is_authenticated %}
+          <a class="account-link" href="{% url 'create_plant' %}">List a plant</a>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="account-link account-button" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a class="account-link" href="{% url 'login' %}">Log in</a>
+          <a class="button button-small" href="{% url 'register' %}">Join Releaf</a>
+        {% endif %}
+      </div>
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation menu">Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <a href="{% url 'home' %}">Home</a>
+          <a href="{% url 'about' %}">Who we are</a>
+          <a href="{% url 'services' %}">Our services</a>
+          <a href="{% url 'contact' %}">Contact us</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    {% if messages %}
+      <div class="message-stack" aria-live="polite">
+        {% for message in messages %}
+          <div class="notice notice-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-about">
+        <a class="brand brand-footer" href="{% url 'home' %}">
+          <span class="brand-mark" aria-hidden="true">R</span>
+          <span class="brand-name">Releaf<small>grow together</small></span>
+        </a>
+        <p>A community for discovering plants, sharing what you know, and finding greener homes for the plants we love.</p>
+      </div>
+      <div>
+        <h2>Quick links</h2>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">Who we are</a>
+        <a href="{% url 'services' %}">Our services</a>
+        <a href="{% url 'contact' %}">Contact us</a>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <a href="{% url 'home' %}#plants">Plant listings</a>
+        <a href="{% url 'services' %}#plant-care">Plant care</a>
+        <a href="{% url 'contact' %}">Get in touch</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {% now "Y" %} Releaf</span>
+      <span>Made for people who love plants.</span>
+    </div>
+  </footer>
+</body>
+</html>

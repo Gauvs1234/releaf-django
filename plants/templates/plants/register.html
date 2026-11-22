@@ -1,0 +1,16 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Join Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Join the community</span>
+    <h1>Create your account</h1>
+    <form method="post" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Join Releaf</button>
+    </form>
+    <a class="form-back-link" href="{% url 'home' %}">← Back to Releaf</a>
+  </section>
+{% endblock %}

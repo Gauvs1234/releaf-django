@@ -1,0 +1,17 @@
+{% extends "plants/base.html" %}
+
+{% block title %}List a Plant | Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Share something green</span>
+    <h1>List a plant</h1>
+    <p>Add a few details to help your plant find the right home.</p>
+    <form method="post" enctype="multipart/form-data" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Save plant</button>
+    </form>
+    <a class="form-back-link" href="{% url 'home' %}">← Back to Releaf</a>
+  </section>
+{% endblock %}
