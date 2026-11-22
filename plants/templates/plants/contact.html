@@ -3,40 +3,62 @@
 {% block title %}Contact Us | Releaf{% endblock %}
 
 {% block content %}
-  <section class="page-banner contact-banner">
+  <section class="page-banner contact-banner container">
     <span class="eyebrow">We’re here to help</span>
-    <h1>Let’s find a way to help you grow.</h1>
-    <p>Questions about a listing, plant care, or the Releaf community? Send us a note.</p>
+    <h1>Contact Us</h1>
+    <p>Questions about a listing, plant care, or the Releaf community? Let us know.</p>
   </section>
 
-  <section class="section contact-section">
-    <div class="contact-intro">
-      <span class="eyebrow">Get in touch</span>
-      <h2>We’d love to hear from you.</h2>
-      <p>Tell us what you are looking for and the Releaf team will be in touch.</p>
-      <div class="contact-promise">
-        <span class="contact-promise-icon" aria-hidden="true">✉</span>
-        <div>
-          <h3>Send us a message</h3>
-          <p>Your note goes directly to our Releaf team for follow-up.</p>
-        </div>
+  <section class="section contact-page container">
+    <div class="row g-3 contact-cards">
+      <div class="col-md-4">
+        <article class="contact-card h-100">
+          <span class="contact-card-icon" aria-hidden="true">⌕</span>
+          <h2>Call Us Anytime</h2>
+          <p>Have a question? Leave us a message and we’ll follow up.</p>
+          <a class="button button-light" href="#contact-form">Let’s Talk</a>
+        </article>
       </div>
-      <div class="contact-promise">
-        <span class="contact-promise-icon" aria-hidden="true">♧</span>
-        <div>
-          <h3>Plant questions welcome</h3>
-          <p>Ask us about listings, sharing a plant, or getting started.</p>
-        </div>
+      <div class="col-md-4">
+        <article class="contact-card h-100">
+          <span class="contact-card-icon" aria-hidden="true">✉</span>
+          <h2>Write to Us</h2>
+          <p>Send your question directly to the Releaf team.</p>
+          <a class="button button-light" href="#contact-form">Send Your Query</a>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="contact-card h-100">
+          <span class="contact-card-icon" aria-hidden="true">⌖</span>
+          <h2>Visit Us</h2>
+          <p>Chandigarh, India</p>
+          <a class="button button-light" href="#contact-map">Find Us Here</a>
+        </article>
       </div>
     </div>
-    <div class="contact-form-card">
-      <h2>Write to us</h2>
-      <p class="form-intro">Fill in the form and we’ll receive your message.</p>
-      <form method="post" class="site-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="button button-dark button-full" type="submit">Send your message <span aria-hidden="true">→</span></button>
-      </form>
+
+    <div class="row g-4 contact-content">
+      <div class="col-lg-5" id="contact-map">
+        <iframe
+          class="contact-map"
+          title="Map of Chandigarh"
+          src="https://maps.google.com/maps?q=Chandigarh%2C%20India&amp;output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer">
+        </iframe>
+        <a class="contact-map-link" href="https://maps.google.com/?q=Chandigarh%2C%20India" target="_blank" rel="noopener noreferrer">Open Chandigarh map</a>
+      </div>
+      <div class="col-lg-7" id="contact-form">
+        <div class="contact-form-card">
+          <h2>Write to Us</h2>
+          <p class="form-intro">Fill in the form and we’ll receive your message.</p>
+          <form method="post" class="site-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button button-dark button-full" type="submit">Submit Now <span aria-hidden="true">→</span></button>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 {% endblock %}

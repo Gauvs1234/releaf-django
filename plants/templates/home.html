@@ -5,51 +5,79 @@
 
 {% block content %}
   <section class="hero">
-    <div class="hero-copy">
-      <span class="eyebrow">Find your next green friend</span>
-      <h1>Connecting plants with loving homes, one match at a time.</h1>
-      <p>Discover plants, share the ones you love, and grow a greener community together.</p>
-      <a class="button button-dark" href="#plants">Let's connect <span aria-hidden="true">→</span></a>
-    </div>
-    <div class="hero-image">
-      <img src="{% static 'plants/snake-plant.jpg' %}" alt="A thriving green houseplant">
-      <span class="image-note">A little more green, every day.</span>
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 hero-copy">
+        <span class="eyebrow">Fresh &amp; natural</span>
+        <h1>Connecting plants with loving homes, one match at a time.</h1>
+        <p>Choose from handpicked indoor and outdoor plants to brighten your home, office, or garden.</p>
+        <a class="button button-dark" href="#plants">Let's connect <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-image">
+          <img src="{% static 'plants/snake-plant.jpg' %}" alt="A healthy snake plant ready for a new home">
+          <span class="image-note">A little more green, every day.</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section featured-plants-section" id="featured-plants">
     <div class="section-heading">
       <div>
-        <span class="eyebrow">Grow with Releaf</span>
-        <h2>Good things grow together</h2>
+        <span class="eyebrow">Find your next green friend</span>
+        <h2>Featured Plants</h2>
       </div>
-      <p>Whether you are sharing a plant or finding one for your space, there is a place for you here.</p>
+      <a class="text-link" href="#plants">Browse all plants</a>
     </div>
-    <div class="feature-grid">
-      <article class="feature-card feature-sage">
-        <span class="feature-icon" aria-hidden="true">♧</span>
-        <h3>Natural plants</h3>
-        <p>Explore plants shared by people in the Releaf community.</p>
-        <a href="#plants" class="text-link">Explore plants <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="feature-card feature-cream">
-        <span class="feature-icon" aria-hidden="true">♡</span>
-        <h3>Thoughtful plant gifts</h3>
-        <p>Make a plant part of a meaningful moment with someone you care about.</p>
-        <a href="{% url 'contact' %}" class="text-link">Talk to us <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="feature-card feature-cream">
-        <span class="feature-icon" aria-hidden="true">✿</span>
-        <h3>Garden care</h3>
-        <p>Share what works for your plants and learn from other growers.</p>
-        <a href="{% url 'services' %}" class="text-link">See our services <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="feature-card feature-sage">
-        <span class="feature-icon" aria-hidden="true">⌁</span>
-        <h3>Greener spaces</h3>
-        <p>Find inspiration to make your home, balcony, or garden feel more alive.</p>
-        <a href="{% url 'about' %}" class="text-link">Meet Releaf <span aria-hidden="true">→</span></a>
-      </article>
+    <div class="plant-grid">
+      {% for plant in featured_plants %}
+        <article class="plant-card">
+          {% if plant.image %}
+            <img class="plant-photo" src="{{ plant.image.url }}" alt="{{ plant.name }}">
+          {% endif %}
+          <div class="plant-card-content">
+            <span class="plant-label">{{ plant.get_care_level_display }} care</span>
+            <h3><a href="{% url 'plant_detail' plant.pk %}">{{ plant.name }}</a></h3>
+            <p class="plant-species">{{ plant.species }}</p>
+            <p>{{ plant.location }}</p>
+            {% if plant.size %}<p><strong>Size:</strong> {{ plant.size }}</p>{% endif %}
+            <a class="button button-light" href="{% url 'plant_detail' plant.pk %}">Meet this plant</a>
+          </div>
+        </article>
+      {% empty %}
+        <p class="empty-state">No plants are featured just yet. Check back soon to find your next green friend.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section why-releaf-section" id="why-releaf">
+    <div class="section-heading centered">
+      <span class="eyebrow">Why Releaf</span>
+      <h2>Good things grow when we share</h2>
+      <p>Make thoughtful plant matches, learn from one another, and help more greenery find a home.</p>
+    </div>
+    <div class="steps-grid row g-3">
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-owner" aria-hidden="true">♧</div>
+          <h3>A caring new home</h3>
+          <p>Give a thriving plant a fresh start with someone ready to care for it.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-adopter" aria-hidden="true">✿</div>
+          <h3>Better plant matches</h3>
+          <p>Find plants that suit your space, location, and care preferences.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-match" aria-hidden="true">♡</div>
+          <h3>A greener community</h3>
+          <p>Share care knowledge and keep more plants growing in good homes.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -58,27 +86,78 @@
       <span class="eyebrow">A simple way to grow</span>
       <h2>How it works</h2>
     </div>
-    <div class="steps-grid">
-      <article class="step-card">
-        <span class="step-number">01</span>
-        <h3>Share a plant</h3>
-        <p>List a plant you would like to rehome and add a few helpful care notes.</p>
-        <a href="{% if user.is_authenticated %}{% url 'create_plant' %}{% else %}{% url 'register' %}{% endif %}" class="text-link">List your plant →</a>
-      </article>
-      <article class="step-card">
-        <span class="step-number">02</span>
-        <h3>Find your match</h3>
-        <p>Browse the listings and use plant details to find one that suits your space.</p>
-        <a href="#plants" class="text-link">Find a plant →</a>
-      </article>
-      <article class="step-card">
-        <span class="step-number">03</span>
-        <h3>Keep growing</h3>
-        <p>Share what you learn and help make plant care a little easier for everyone.</p>
-        <a href="{% url 'contact' %}" class="text-link">Join the conversation →</a>
-      </article>
+    <div class="steps-grid row g-3">
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-owner" aria-hidden="true">♧</div>
+          <h3>For Plant Owners</h3>
+          <p>List your plant, share its care tips, and help it find a loving home.</p>
+          <a href="{% if user.is_authenticated %}{% url 'create_plant' %}{% else %}{% url 'register' %}{% endif %}" class="text-link">List Your Plant →</a>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-adopter" aria-hidden="true">✿</div>
+          <h3>For Plant Adopters</h3>
+          <p>Browse, discover, and adopt a plant that suits your space.</p>
+          <a href="#plants" class="text-link">Find a Plant →</a>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="step-card h-100">
+          <div class="step-art step-art-match" aria-hidden="true">♡</div>
+          <h3>The Match</h3>
+          <p>Connect with the owner, arrange a handoff, and watch your plant thrive.</p>
+          <a href="{% url 'about' %}" class="text-link">Make a Match →</a>
+        </article>
+      </div>
     </div>
   </section>
+
+  {% if user.is_authenticated %}
+    <section class="section recommendation-section" id="recommendations">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Recommended for you</span>
+          <h2>Recommended Plants</h2>
+        </div>
+        <a class="text-link" href="{% url 'edit_profile' %}">Update your preferences</a>
+      </div>
+      <p class="recommendation-intro">
+        Care, location, and size matches boost your score, while environment and sunlight preferences help refine your recommendations.
+      </p>
+      {% if recommendations %}
+        <div class="plant-grid recommendation-grid">
+          {% for recommendation in recommendations %}
+            <article class="plant-card recommendation-card">
+              {% if recommendation.plant.image %}
+                <img class="plant-photo" src="{{ recommendation.plant.image.url }}" alt="{{ recommendation.plant.name }}">
+              {% endif %}
+              <div class="plant-card-content">
+                <span class="plant-label">{{ recommendation.score }} match points</span>
+                <h3><a href="{% url 'plant_detail' recommendation.plant.pk %}">{{ recommendation.plant.name }}</a></h3>
+                <p class="plant-species">{{ recommendation.plant.species }}</p>
+                <p>{{ recommendation.plant.get_care_level_display }} care · {{ recommendation.plant.get_environment_display }}</p>
+                {% if recommendation.plant.size %}<p><strong>Size:</strong> {{ recommendation.plant.size }}</p>{% endif %}
+                {% if recommendation.plant.sunlight_requirements %}
+                  <p><strong>Sunlight:</strong> {{ recommendation.plant.sunlight_requirements }}</p>
+                {% endif %}
+                <p class="plant-owner">{{ recommendation.plant.location }}</p>
+                <a class="button button-light" href="{% url 'plant_detail' recommendation.plant.pk %}">View plant</a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% elif recommendation_preferences_set %}
+        <p class="empty-state">No available plants match your preferences yet. Browse all listings and check back soon.</p>
+      {% else %}
+        <p class="empty-state">
+          Add your location and plant preferences to get personalized matches.
+          <a class="text-link" href="{% url 'edit_profile' %}">Set preferences</a>
+        </p>
+      {% endif %}
+    </section>
+  {% endif %}
 
   <section class="section plant-list-section" id="plants">
     <div class="section-heading">
@@ -109,16 +188,69 @@
             <img class="plant-photo" src="{{ plant.image.url }}" alt="{{ plant.name }}">
           {% endif %}
           <div class="plant-card-content">
+            <span class="plant-label">{{ plant.get_status_display }}</span>
             <span class="plant-label">{{ plant.get_care_level_display }} care</span>
-            <h3>{{ plant.name }}</h3>
+            <h3><a href="{% url 'plant_detail' plant.pk %}">{{ plant.name }}</a></h3>
             <p class="plant-species">{{ plant.species }}</p>
+            {% if plant.description %}<p>{{ plant.description }}</p>{% endif %}
             <p>{{ plant.care_tips }}</p>
-            <p class="plant-owner">Shared by {{ plant.owner.username }} · {{ plant.location }}</p>
+            {% if plant.size %}<p><strong>Size:</strong> {{ plant.size }}</p>{% endif %}
+            {% if plant.environment %}<p><strong>Environment:</strong> {{ plant.get_environment_display }}</p>{% endif %}
+            {% if plant.sunlight_requirements %}<p><strong>Sunlight:</strong> {{ plant.sunlight_requirements }}</p>{% endif %}
+            {% if plant.watering_frequency %}<p><strong>Watering:</strong> {{ plant.watering_frequency }}</p>{% endif %}
+            <p class="plant-owner">
+              Shared by <a href="{% url 'profile_detail' plant.owner_id %}">{{ plant.owner.username }}</a>
+              · {{ plant.location }}
+            </p>
+            {% if user.is_authenticated %}
+              {% if plant.owner_id != user.pk %}
+                <form method="post" action="{% url 'toggle_favorite' plant.pk %}" class="favorite-action-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button class="button button-favorite" type="submit">
+                    {% if plant.pk in favorite_ids %}♥ Saved — remove{% else %}♥ Save plant{% endif %}
+                  </button>
+                </form>
+              {% endif %}
+            {% else %}
+              <a class="text-link" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Log in to save this plant</a>
+            {% endif %}
           </div>
         </article>
       {% empty %}
         <p class="empty-state">No plants match those filters yet. Try clearing the filters or check back soon.</p>
       {% endfor %}
     </div>
+  </section>
+
+  <section class="section home-reviews-section" id="reviews">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Kind words from our community</span>
+        <h2>Reviews</h2>
+      </div>
+      <a class="text-link" href="{% url 'about' %}#community-impact">Our community</a>
+    </div>
+    {% if recent_reviews %}
+      <div class="review-list">
+        {% for review in recent_reviews %}
+          <article class="review-card">
+            <div class="review-card-heading">
+              <strong aria-label="{{ review.rating }} out of 5 stars">
+                {% for star in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}
+              </strong>
+              <span>{{ review.rating }} / 5</span>
+            </div>
+            <p>{{ review.comment|linebreaksbr }}</p>
+            <span>
+              Reviewed by <a href="{% url 'profile_detail' review.user_id %}">{{ review.user.username }}</a>
+              · {{ review.plant.name }}
+            </span>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Reviews from completed adoptions will appear here as our community grows.</p>
+    {% endif %}
   </section>
 {% endblock %}

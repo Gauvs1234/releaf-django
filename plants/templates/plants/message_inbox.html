@@ -1,0 +1,49 @@
+{% extends "plants/base.html" %}
+
+{% block title %}{% if folder == "sent" %}Sent Items{% else %}Inbox{% endif %} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section inbox-page">
+    <span class="eyebrow">Owner-adopter communication</span>
+    <h1>Messages{% if unread_message_count %} <span class="inbox-unread-count">{{ unread_message_count }} unread</span>{% endif %}</h1>
+    <nav class="message-tabs" aria-label="Message folders">
+      <a class="{% if folder == 'inbox' %}active{% endif %}" href="{% url 'message_inbox' %}?folder=inbox">Inbox</a>
+      <a class="{% if folder == 'sent' %}active{% endif %}" href="{% url 'message_inbox' %}?folder=sent">Sent Items</a>
+    </nav>
+
+    <div class="conversation-list">
+      {% for conversation in conversations %}
+        <a class="conversation-row" href="{% url 'conversation_detail' conversation.pk %}">
+          <span class="owner-avatar" aria-hidden="true">
+            {% if conversation.participant_one_id == user.pk %}
+              {{ conversation.participant_two.username|first|upper }}
+            {% else %}
+              {{ conversation.participant_one.username|first|upper }}
+            {% endif %}
+          </span>
+          <span class="conversation-summary">
+            <strong>
+              {% if conversation.participant_one_id == user.pk %}
+                {{ conversation.participant_two.username }}
+              {% else %}
+                {{ conversation.participant_one.username }}
+              {% endif %}
+            </strong>
+            <span class="conversation-plant">{% if conversation.plant %}{{ conversation.plant.name }}{% else %}Direct message{% endif %}</span>
+            <span class="conversation-preview">
+              {% if conversation.latest_sender_id == user.pk %}You: {% endif %}{{ conversation.latest_text|truncatechars:100 }}
+            </span>
+            {% if folder == "inbox" and conversation.unread_count %}
+              <span class="conversation-unread-count">{{ conversation.unread_count }} unread</span>
+            {% endif %}
+          </span>
+          <time class="conversation-date" datetime="{{ conversation.latest_created_at|date:'c' }}">{{ conversation.latest_created_at|date:"M j, Y" }}</time>
+        </a>
+      {% empty %}
+        <p class="empty-state">
+          {% if folder == "sent" %}You haven't sent any messages yet.{% else %}Your inbox is empty. Contact a plant owner to start a conversation.{% endif %}
+        </p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Edit {{ plant.name }} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Update your listing</span>
+    <h1>Edit {{ plant.name }}</h1>
+    <p>Keep the plant details and care information up to date.</p>
+    <form method="post" enctype="multipart/form-data" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Save changes</button>
+    </form>
+    <a class="form-back-link" href="{% url 'dashboard' %}">← Back to dashboard</a>
+  </section>
+{% endblock %}

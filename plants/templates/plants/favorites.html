@@ -1,0 +1,33 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Saved Plants | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section favorites-page">
+    <span class="eyebrow">Your collection</span>
+    <h1>Saved plants</h1>
+    <p>Plants you have bookmarked for later.</p>
+    <div class="plant-grid">
+      {% for favorite in saved_plants %}
+        <article class="plant-card">
+          {% if favorite.plant.image %}
+            <img class="plant-photo" src="{{ favorite.plant.image.url }}" alt="{{ favorite.plant.name }}">
+          {% endif %}
+          <div class="plant-card-content">
+            <span class="plant-label">{{ favorite.plant.get_status_display }}</span>
+            <h2><a href="{% url 'plant_detail' favorite.plant.pk %}">{{ favorite.plant.name }}</a></h2>
+            <p class="plant-species">{{ favorite.plant.species }}</p>
+            <p>Shared by {{ favorite.plant.owner.username }} · {{ favorite.plant.location }}</p>
+            <form method="post" action="{% url 'toggle_favorite' favorite.plant.pk %}" class="favorite-action-form">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="button button-favorite" type="submit">♥ Remove from saved</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="empty-state">You haven’t saved any plants yet. Explore the listings to find one you like.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

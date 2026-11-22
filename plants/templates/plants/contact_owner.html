@@ -1,0 +1,17 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Contact {{ plant.owner.username }} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Plant inquiry</span>
+    <h1>Contact the owner</h1>
+    <p>Send a private message to {{ plant.owner.username }} about <strong>{{ plant.name }}</strong>.</p>
+    <form method="post" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Send message</button>
+    </form>
+    <a class="form-back-link" href="{% url 'plant_detail' plant.pk %}">← Back to {{ plant.name }}</a>
+  </section>
+{% endblock %}

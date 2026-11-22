@@ -141,6 +141,35 @@ h3 {
   text-decoration: none;
 }
 
+.unread-badge,
+.conversation-unread-count,
+.inbox-unread-count {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--leaf);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.unread-badge {
+  min-width: 20px;
+  height: 20px;
+  justify-content: center;
+  margin-left: 4px;
+  padding: 0 6px;
+}
+
+.conversation-unread-count,
+.inbox-unread-count {
+  padding: 3px 9px;
+}
+
+.inbox-unread-count {
+  vertical-align: middle;
+}
+
 .main-nav a:hover,
 .account-link:hover,
 .footer-main a:hover {
@@ -983,6 +1012,482 @@ h3 {
   font-weight: 700;
 }
 
+.profile-page {
+  min-height: 60vh;
+}
+
+.profile-header {
+  margin-bottom: 60px;
+  padding: clamp(24px, 5vw, 48px);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+  gap: 34px;
+  border-radius: 22px;
+  background: var(--sage);
+}
+
+.profile-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--paper);
+}
+
+.profile-placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--forest);
+  font-family: Georgia, serif;
+  font-size: 4rem;
+}
+
+.profile-header h1 {
+  margin-bottom: 8px;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+}
+
+.profile-header p {
+  max-width: 700px;
+  color: var(--muted);
+}
+
+.profile-header .profile-city {
+  margin-bottom: 12px;
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.profile-plants-heading {
+  margin-top: 30px;
+}
+
+.profile-reviews,
+.plant-reviews {
+  margin: 35px 0;
+}
+
+.review-summary {
+  margin-bottom: 24px;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 16px;
+  background: #e8eddf;
+}
+
+.review-summary-star {
+  color: #b7832f;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.review-summary strong,
+.review-summary span {
+  display: block;
+}
+
+.review-summary strong {
+  color: var(--forest);
+  font-size: 1.3rem;
+}
+
+.review-summary span {
+  color: var(--muted);
+  font-size: 0.87rem;
+}
+
+.profile-reviews h2,
+.plant-reviews h2 {
+  font-size: 1.65rem;
+}
+
+.review-list {
+  display: grid;
+  gap: 14px;
+}
+
+.review-card {
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.review-card-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #b7832f;
+}
+
+.review-card-heading time,
+.review-card > span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.review-card > p {
+  margin: 10px 0;
+}
+
+.review-card > a {
+  color: var(--forest);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.review-form {
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.review-form p {
+  margin-bottom: 15px;
+}
+
+.review-form label {
+  font-weight: 700;
+}
+
+.review-form textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #ccd5ca;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.review-form ul {
+  margin: 8px 0;
+  padding-left: 0;
+  display: flex;
+  gap: 14px;
+  list-style: none;
+}
+
+.review-form ul label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.review-note {
+  color: var(--muted);
+}
+
+.plant-detail-page {
+  min-height: 65vh;
+}
+
+.plant-detail-page > .form-back-link {
+  margin: 0 0 22px;
+}
+
+.plant-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+  gap: clamp(30px, 5vw, 64px);
+  align-items: start;
+}
+
+.plant-detail-image {
+  min-height: 520px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--sage);
+}
+
+.plant-detail-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+}
+
+.plant-detail-copy {
+  padding: 18px 0;
+}
+
+.plant-detail-copy h1 {
+  margin: 10px 0 4px;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+}
+
+.plant-detail-copy .plant-species {
+  color: var(--muted);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.plant-description {
+  margin: 24px 0;
+  font-size: 1.05rem;
+}
+
+.plant-detail-facts {
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+  border-radius: 14px;
+  background: var(--sage);
+}
+
+.plant-detail-facts p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.care-panel {
+  margin: 22px 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.care-panel h2 {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.care-panel p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.owner-card {
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.owner-card img,
+.owner-avatar {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--sage);
+}
+
+.owner-avatar {
+  display: grid;
+  place-items: center;
+  color: var(--forest);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.owner-card .eyebrow {
+  margin-bottom: 0;
+  display: block;
+  font-size: 0.65rem;
+}
+
+.owner-profile-link {
+  color: var(--forest);
+  font-weight: 800;
+}
+
+.owner-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.owner-notice {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.favorite-action-form {
+  margin-top: 13px;
+}
+
+.button-favorite {
+  min-height: 40px;
+  padding: 8px 15px;
+  border-color: #e5c4c0;
+  background: #fff7f5;
+  color: #8b3731;
+  font-size: 0.84rem;
+}
+
+.button-favorite:hover {
+  background: #f9e9e6;
+  color: #702720;
+}
+
+.inbox-page,
+.conversation-page {
+  min-height: 65vh;
+}
+
+.message-tabs {
+  margin: 24px 0 18px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.message-tabs a {
+  padding: 10px 15px;
+  color: var(--muted);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.message-tabs a.active {
+  border-bottom: 3px solid var(--leaf);
+  color: var(--forest);
+}
+
+.conversation-list {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.conversation-row {
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.conversation-row:last-child {
+  border-bottom: 0;
+}
+
+.conversation-row:hover {
+  background: #f1f4ec;
+}
+
+.conversation-summary {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+}
+
+.conversation-summary strong {
+  color: var(--forest);
+}
+
+.conversation-plant {
+  color: var(--leaf);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.conversation-preview,
+.conversation-date {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-header {
+  margin: 22px 0;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 16px;
+  background: var(--sage);
+}
+
+.conversation-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.conversation-header h1 a,
+.conversation-header p a {
+  color: var(--forest);
+}
+
+.conversation-header p {
+  margin: 4px 0 0;
+}
+
+.conversation-messages {
+  min-height: 180px;
+  max-height: 560px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.message-bubble {
+  max-width: min(78%, 640px);
+  padding: 13px 16px;
+  border-radius: 15px;
+}
+
+.message-bubble p {
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.message-bubble time {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.message-mine {
+  align-self: flex-end;
+  background: #e2ecdc;
+}
+
+.message-theirs {
+  align-self: flex-start;
+  background: #f1f1e9;
+}
+
+.conversation-reply {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.conversation-reply label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.conversation-reply textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px;
+  border: 1px solid #ccd5ca;
+  border-radius: 8px;
+  font: inherit;
+}
+
 @media (max-width: 900px) {
   .header-inner {
     gap: 18px;
@@ -1095,7 +1600,18 @@ h3 {
   .audience-grid,
   .service-grid,
   .contact-section,
-  .mission-section {
+  .mission-section,
+  .plant-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .plant-detail-image,
+  .plant-detail-image img {
+    min-height: 340px;
+    max-height: 480px;
+  }
+
+  .profile-header {
     grid-template-columns: 1fr;
   }
 
@@ -1155,6 +1671,28 @@ h3 {
   .footer-bottom {
     flex-direction: column;
   }
+
+  .conversation-row {
+    padding: 15px;
+  }
+
+  .conversation-date {
+    display: none;
+  }
+
+  .message-bubble {
+    max-width: 92%;
+  }
+}
+
+.recommendation-intro {
+  margin-top: -18px;
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
+.recommendation-card .plant-card-content > .button {
+  margin-top: 5px;
 }
 
 @media (max-width: 430px) {
@@ -1179,5 +1717,639 @@ h3 {
   .contact-form-card,
   .form-panel {
     padding: 23px;
+  }
+}
+
+.dashboard-page {
+  padding-top: 54px;
+  padding-bottom: 90px;
+}
+
+.dashboard-header {
+  margin-bottom: 34px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.dashboard-header h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.dashboard-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.dashboard-shortcuts {
+  margin-bottom: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-shortcut {
+  padding: 23px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.dashboard-shortcut:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.dashboard-shortcut .eyebrow {
+  margin-bottom: 8px;
+}
+
+.dashboard-shortcut h2 {
+  margin-bottom: 8px;
+  font-size: 1.45rem;
+}
+
+.dashboard-shortcut p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.dashboard-panel {
+  margin-top: 28px;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+}
+
+.dashboard-section-heading {
+  margin-bottom: 22px;
+}
+
+.dashboard-section-heading h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+}
+
+.dashboard-list {
+  display: grid;
+  gap: 14px;
+}
+
+.dashboard-list-item {
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.dashboard-plant-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  background: var(--sage);
+  object-fit: cover;
+}
+
+.dashboard-list-copy h3 {
+  margin: 3px 0;
+}
+
+.dashboard-list-copy h3 a,
+.dashboard-inline-link,
+.dashboard-saved-item {
+  text-decoration: none;
+}
+
+.dashboard-list-copy p {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.dashboard-inline-link {
+  color: var(--leaf);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.dashboard-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dashboard-item-actions .button {
+  min-height: 38px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+}
+
+.dashboard-saved-list {
+  display: grid;
+}
+
+.dashboard-saved-item {
+  padding: 15px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dashboard-saved-item:last-child {
+  border-bottom: 0;
+}
+
+.dashboard-saved-item > span:first-child,
+.dashboard-saved-item > span:first-child > span {
+  display: block;
+}
+
+.dashboard-saved-item > span:first-child > span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 900px) {
+  .dashboard-shortcuts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-shortcuts {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-list-item {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .dashboard-plant-image {
+    width: 68px;
+    height: 68px;
+  }
+
+  .dashboard-item-actions {
+    grid-column: 2;
+  }
+}
+
+.hero {
+  display: block;
+}
+
+.hero > .row {
+  min-height: 500px;
+}
+
+.feature-grid,
+.steps-grid,
+.audience-grid,
+.service-grid {
+  display: flex;
+  gap: 0;
+}
+
+.feature-card {
+  min-height: 180px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.feature-art {
+  min-height: 150px;
+  flex: 0 0 40%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #cbd8c2, #e4e9dc);
+  color: var(--forest);
+  font-size: 3.2rem;
+}
+
+.feature-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  object-fit: cover;
+}
+
+.feature-art-gift {
+  background: linear-gradient(145deg, #e8dfcb, #f4eddd);
+}
+
+.feature-art-care {
+  background: linear-gradient(145deg, #dce0ca, #eeedda);
+}
+
+.feature-art-accessories {
+  background: linear-gradient(145deg, #c6d6c3, #e2eadf);
+}
+
+.feature-copy {
+  padding: 8px;
+}
+
+.feature-copy h3 {
+  margin-bottom: 8px;
+}
+
+.feature-copy p {
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.step-card {
+  padding: 16px;
+}
+
+.step-art {
+  height: 150px;
+  margin-bottom: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #d3ded0, #eef0e5);
+  color: var(--forest);
+  font-size: 3.5rem;
+}
+
+.step-art-adopter {
+  background: linear-gradient(145deg, #e4dbc9, #f5eddf);
+}
+
+.step-art-match {
+  background: linear-gradient(145deg, #d9e3d3, #e9eee2);
+}
+
+.step-number {
+  display: none;
+}
+
+.about-hero {
+  display: block;
+}
+
+.about-hero .about-image {
+  border-radius: 48% 48% 44% 44%;
+}
+
+.about-copy h1 {
+  font-size: clamp(2.2rem, 3.5vw, 3.35rem);
+}
+
+.about-benefit {
+  margin: 15px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.about-benefit > span {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sage);
+  color: var(--forest);
+  font-size: 1.35rem;
+}
+
+.about-benefit p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.team-section {
+  padding-top: 70px;
+}
+
+.team-card {
+  height: 100%;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.team-avatar {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 15px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #cbd8c2, #e4e9dc);
+  color: var(--forest);
+  font-size: 2.5rem;
+}
+
+.team-avatar-adopter {
+  background: linear-gradient(145deg, #e8dfcb, #f4eddd);
+}
+
+.team-avatar-community {
+  background: linear-gradient(145deg, #dce0ca, #eeedda);
+}
+
+.team-card h3 {
+  margin-bottom: 8px;
+}
+
+.team-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.about-stats {
+  padding: 48px 0;
+  background:
+    linear-gradient(rgba(16, 47, 32, 0.78), rgba(16, 47, 32, 0.82)),
+    url("snake-plant.jpg") center 48% / cover;
+  color: white;
+}
+
+.about-stats-heading {
+  margin-bottom: 24px;
+  color: white;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.about-stats strong,
+.about-stats span {
+  display: block;
+}
+
+.about-stats strong {
+  color: #e2e9dc;
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.about-stats span {
+  font-size: 0.9rem;
+}
+
+.audience-section {
+  padding-top: 70px;
+  padding-bottom: 80px;
+}
+
+.audience-card {
+  height: 100%;
+}
+
+.page-banner {
+  width: min(1200px, calc(100% - 48px));
+}
+
+.services-banner,
+.contact-banner {
+  background:
+    linear-gradient(rgba(16, 47, 32, 0.82), rgba(16, 47, 32, 0.82)),
+    url("snake-plant.jpg") center 43% / cover;
+}
+
+.service-card {
+  grid-template-columns: 0.75fr 1fr;
+}
+
+.service-card-gift {
+  background: #f0eee3;
+}
+
+.service-card-care {
+  background: #e5e9df;
+}
+
+.service-card-accessories {
+  background: #f0eee3;
+}
+
+.service-card-copy {
+  padding: 22px;
+  align-self: center;
+}
+
+.service-card-copy h2 {
+  margin-bottom: 9px;
+  font-size: 1.35rem;
+}
+
+.contact-page {
+  padding-top: 0;
+  padding-bottom: 90px;
+}
+
+.contact-cards {
+  position: relative;
+  z-index: 1;
+  margin-top: -52px;
+}
+
+.contact-card {
+  padding: 20px 17px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.contact-card-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sage);
+  color: var(--forest);
+  font-size: 1.35rem;
+}
+
+.contact-card h2 {
+  margin-bottom: 7px;
+  font-size: 1rem;
+}
+
+.contact-card p {
+  min-height: 46px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.contact-card .button {
+  min-height: 36px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+}
+
+.contact-content {
+  margin-top: 28px;
+  scroll-margin-top: 24px;
+}
+
+.contact-map {
+  width: 100%;
+  min-height: 345px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--sage);
+}
+
+.contact-map-link {
+  margin-top: 8px;
+  display: inline-block;
+  color: var(--forest);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.contact-form-card {
+  height: 100%;
+}
+
+.site-form .form-control {
+  min-height: 42px;
+  border-color: #ccd5ca;
+  border-radius: 7px;
+  font: inherit;
+}
+
+.site-form textarea.form-control {
+  min-height: 115px;
+}
+
+.site-footer {
+  padding: 52px 0 20px;
+}
+
+.footer-main {
+  display: block;
+}
+
+.footer-main h2 {
+  margin: 6px 0 16px;
+}
+
+.footer-main > .row > div:not(:first-child) a,
+.footer-main > .row > div:not(:first-child) span {
+  margin: 7px 0;
+  display: block;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  max-width: 1320px;
+}
+
+@media (max-width: 700px) {
+  .hero > .row {
+    min-height: 0;
+  }
+
+  .feature-card {
+    min-height: 155px;
+  }
+
+  .feature-art,
+  .feature-art img {
+    min-height: 125px;
+  }
+
+  .about-hero {
+    padding: 22px;
+  }
+
+  .contact-cards {
+    margin-top: -30px;
+  }
+
+  .contact-map {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 575px) {
+  .feature-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .feature-art {
+    min-height: 135px;
+    flex-basis: auto;
+  }
+
+  .feature-art img {
+    height: 135px;
+    min-height: 135px;
+  }
+
+  .service-card {
+    grid-template-columns: 1fr;
+  }
+
+  .service-art {
+    min-height: 140px;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+  }
+}
+
+.adoption-action-form {
+  margin-bottom: 12px;
+}
+
+.adoption-request-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.adoption-request-item .dashboard-item-actions form {
+  margin: 0;
+}
+
+.adoption-request-item .dashboard-item-actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .adoption-request-item {
+    grid-template-columns: 1fr;
+  }
+
+  .adoption-request-item .dashboard-item-actions {
+    grid-column: 1;
   }
 }

@@ -1,0 +1,36 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Conversation with {{ recipient.username }} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section conversation-page">
+    <a class="form-back-link" href="{% url 'message_inbox' %}">← Back to messages</a>
+    <header class="conversation-header">
+      <span class="owner-avatar" aria-hidden="true">{{ recipient.username|first|upper }}</span>
+      <div>
+        <span class="eyebrow">Conversation with</span>
+        <h1><a href="{% url 'profile_detail' recipient.pk %}">{{ recipient.username }}</a></h1>
+        {% if conversation.plant %}
+          <p>About <a href="{% url 'plant_detail' conversation.plant.pk %}">{{ conversation.plant.name }}</a></p>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="conversation-messages" aria-live="polite">
+      {% for message in conversation_messages %}
+        <article class="message-bubble {% if message.sender_id == user.pk %}message-mine{% else %}message-theirs{% endif %}">
+          <p>{{ message.text|linebreaksbr }}</p>
+          <time datetime="{{ message.created_at|date:'c' }}">{{ message.created_at|date:"M j, Y · g:i a" }}</time>
+        </article>
+      {% empty %}
+        <p class="empty-state">No messages in this conversation yet.</p>
+      {% endfor %}
+    </div>
+
+    <form method="post" class="conversation-reply">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Send message</button>
+    </form>
+  </section>
+{% endblock %}

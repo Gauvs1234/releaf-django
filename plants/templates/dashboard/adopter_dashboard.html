@@ -1,0 +1,128 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Adopter Dashboard | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section dashboard-page">
+    <header class="dashboard-header">
+      <div>
+        <span class="eyebrow">Your Releaf space</span>
+        <h1>Adopter Dashboard</h1>
+        <p>Keep track of saved plants, conversations, reviews, and your profile.</p>
+      </div>
+      <div class="dashboard-item-actions">
+        <a class="button button-light" href="{% url 'dashboard' %}">Owner Dashboard</a>
+        <a class="button button-dark" href="{% url 'profile_detail' user.pk %}">Profile</a>
+      </div>
+    </header>
+
+    <section class="dashboard-panel" id="saved-plants">
+      <div class="section-heading dashboard-section-heading">
+        <div>
+          <span class="eyebrow">Your collection</span>
+          <h2>Saved Plants</h2>
+        </div>
+        <a class="text-link" href="{% url 'favorites' %}">View all saved plants</a>
+      </div>
+      <div class="dashboard-saved-list">
+        {% for favorite in saved_plants %}
+          <a class="dashboard-saved-item" href="{% url 'plant_detail' favorite.plant_id %}">
+            <span>
+              <strong>{{ favorite.plant.name }}</strong>
+              <span>{{ favorite.plant.species }} · {{ favorite.plant.location }}</span>
+            </span>
+            <span class="plant-label">{{ favorite.plant.get_status_display }}</span>
+          </a>
+        {% empty %}
+          <p class="empty-state">You haven’t saved a plant yet. Explore listings to find one you like.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dashboard-panel" id="adoption-requests">
+      <div class="section-heading dashboard-section-heading">
+        <div>
+          <span class="eyebrow">Track your applications</span>
+          <h2>My Adoption Requests</h2>
+        </div>
+      </div>
+      <div class="dashboard-list">
+        {% for adoption_request in my_adoption_requests %}
+          <article class="dashboard-list-item adoption-request-item">
+            <div class="dashboard-list-copy">
+              <span class="plant-label">{{ adoption_request.get_status_display }}</span>
+              <h3><a href="{% url 'plant_detail' adoption_request.plant_id %}">{{ adoption_request.plant.name }}</a></h3>
+              <p>Owner: {{ adoption_request.plant.owner.username }} · {{ adoption_request.created_at|date:"M j, Y" }}</p>
+            </div>
+          </article>
+        {% empty %}
+          <p class="empty-state">Your plant adoption requests and their status will appear here.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dashboard-panel" id="messages">
+      <div class="section-heading dashboard-section-heading">
+        <div>
+          <span class="eyebrow">Owner-adopter communication</span>
+          <h2>Recent Messages</h2>
+        </div>
+        <a class="text-link" href="{% url 'message_inbox' %}">Open inbox</a>
+      </div>
+      <div class="conversation-list">
+        {% for message in recent_messages %}
+          <a class="conversation-row" href="{% url 'conversation_detail' message.conversation_id %}">
+            <span class="owner-avatar" aria-hidden="true">
+              {% if message.sender_id == user.pk %}
+                {{ message.receiver.username|first|upper }}
+              {% else %}
+                {{ message.sender.username|first|upper }}
+              {% endif %}
+            </span>
+            <span class="conversation-summary">
+              <strong>
+                {% if message.sender_id == user.pk %}
+                  To {{ message.receiver.username }}
+                {% else %}
+                  From {{ message.sender.username }}
+                {% endif %}
+              </strong>
+              <span class="conversation-plant">{% if message.conversation.plant %}{{ message.conversation.plant.name }}{% else %}Direct message{% endif %}</span>
+              <span class="conversation-preview">{% if message.sender_id == user.pk %}You: {% endif %}{{ message.text|truncatechars:100 }}</span>
+            </span>
+            <time class="conversation-date" datetime="{{ message.created_at|date:'c' }}">{{ message.created_at|date:"M j, Y" }}</time>
+          </a>
+        {% empty %}
+          <p class="empty-state">You don’t have any messages yet. Contact a plant owner to start a conversation.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="dashboard-panel" id="my-reviews">
+      <div class="section-heading dashboard-section-heading">
+        <div>
+          <span class="eyebrow">Your adoption experiences</span>
+          <h2>My Reviews</h2>
+        </div>
+      </div>
+      <div class="review-list">
+        {% for review in my_reviews %}
+          <article class="review-card">
+            <div class="review-card-heading">
+              <strong aria-label="{{ review.rating }} out of 5 stars">
+                {% for star in "12345" %}
+                  {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                {% endfor %}
+              </strong>
+              <span>{{ review.rating }} / 5</span>
+            </div>
+            <p>{{ review.comment|linebreaksbr }}</p>
+            <span>For <a href="{% url 'plant_detail' review.plant_id %}">{{ review.plant.name }}</a> · {{ review.plant.owner.username }}</span>
+          </article>
+        {% empty %}
+          <p class="empty-state">Reviews you leave after an adoption will appear here.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+{% endblock %}

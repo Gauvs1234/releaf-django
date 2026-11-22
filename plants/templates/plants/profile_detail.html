@@ -1,0 +1,83 @@
+{% extends "plants/base.html" %}
+
+{% block title %}{{ profile_user.username }} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section profile-page">
+    <div class="profile-header">
+      {% if profile.image %}
+        <img class="profile-photo" src="{{ profile.image.url }}" alt="{{ profile_user.username }}'s profile photo">
+      {% else %}
+        <div class="profile-photo profile-placeholder" aria-hidden="true">{{ profile_user.username|first|upper }}</div>
+      {% endif %}
+      <div>
+        <span class="eyebrow">Releaf community member</span>
+        <h1>{{ profile_user.username }}</h1>
+        {% if profile.city %}<p class="profile-city">{{ profile.city }}</p>{% endif %}
+        {% if profile.bio %}<p>{{ profile.bio|linebreaksbr }}</p>{% else %}<p>This member hasn't added a bio yet.</p>{% endif %}
+        {% if user.is_authenticated and user.pk == profile_user.pk %}
+          <a class="button button-dark" href="{% url 'edit_profile' %}">Edit profile</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <section class="profile-reviews" id="reviews">
+      <div class="review-summary">
+        <span class="review-summary-star" aria-hidden="true">★</span>
+        <div>
+          {% if review_summary.count %}
+            <strong>{{ review_summary.average|floatformat:1 }} / 5</strong>
+            <span>{{ review_summary.count }} review{{ review_summary.count|pluralize }}</span>
+          {% else %}
+            <strong>No reviews yet</strong>
+            <span>Reviews from completed adoptions will appear here.</span>
+          {% endif %}
+        </div>
+      </div>
+      {% if reviews %}
+        <h2>Reviews</h2>
+        <div class="review-list">
+          {% for review in reviews %}
+            <article class="review-card">
+              <div class="review-card-heading">
+                <strong>
+                  {% for star in "12345" %}
+                    {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                  {% endfor %}
+                </strong>
+                <span>{{ review.rating }} / 5</span>
+              </div>
+              <p>{{ review.comment|linebreaksbr }}</p>
+              <span>For {{ review.plant.name }} · {{ review.user.username }}</span>
+            </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+
+    <div class="section-heading profile-plants-heading">
+      <div>
+        <span class="eyebrow">Shared by {{ profile_user.username }}</span>
+        <h2>Plant listings</h2>
+      </div>
+    </div>
+    <div class="plant-grid">
+      {% for plant in plants %}
+        <article class="plant-card">
+          {% if plant.image %}
+            <img class="plant-photo" src="{{ plant.image.url }}" alt="{{ plant.name }}">
+          {% endif %}
+          <div class="plant-card-content">
+            <span class="plant-label">{{ plant.get_status_display }}</span>
+            <h3><a href="{% url 'plant_detail' plant.pk %}">{{ plant.name }}</a></h3>
+            <p class="plant-species">{{ plant.species }}</p>
+            <p>{{ plant.care_tips }}</p>
+            <p class="plant-owner">{{ plant.location }}</p>
+          </div>
+        </article>
+      {% empty %}
+        <p class="empty-state">This member hasn't listed any plants yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

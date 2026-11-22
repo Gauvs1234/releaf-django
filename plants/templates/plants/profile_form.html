@@ -1,0 +1,17 @@
+{% extends "plants/base.html" %}
+
+{% block title %}Edit Profile | Releaf{% endblock %}
+
+{% block content %}
+  <section class="form-page">
+    <span class="eyebrow">Your Releaf profile</span>
+    <h1>Edit your profile</h1>
+    <p>Share a little about yourself and tell Releaf what plants suit your space.</p>
+    <form method="post" enctype="multipart/form-data" class="form-panel">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button-dark" type="submit">Save profile</button>
+    </form>
+    <a class="form-back-link" href="{% url 'profile_detail' user.pk %}">← Back to profile</a>
+  </section>
+{% endblock %}

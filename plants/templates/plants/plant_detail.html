@@ -1,0 +1,111 @@
+{% extends "plants/base.html" %}
+
+{% block title %}{{ plant.name }} | Releaf{% endblock %}
+
+{% block content %}
+  <section class="section plant-detail-page">
+    <a class="form-back-link" href="{% url 'home' %}#plants">← Back to plant listings</a>
+    <div class="plant-detail">
+      <div class="plant-detail-image">
+        {% if plant.image %}
+          <img src="{{ plant.image.url }}" alt="{{ plant.name }}">
+        {% endif %}
+      </div>
+      <div class="plant-detail-copy">
+        <span class="plant-label">{{ plant.get_status_display }} · {{ plant.get_care_level_display }} care</span>
+        <h1>{{ plant.name }}</h1>
+        <p class="plant-species">{{ plant.species }}</p>
+        {% if plant.description %}<p class="plant-description">{{ plant.description|linebreaksbr }}</p>{% endif %}
+        <div class="plant-detail-facts">
+          <p><strong>Size:</strong> {{ plant.size|default:"Not provided" }}</p>
+          <p><strong>Environment:</strong> {{ plant.get_environment_display|default:"Not provided" }}</p>
+          <p><strong>Sunlight:</strong> {{ plant.sunlight_requirements|default:"Not provided" }}</p>
+          <p><strong>Watering:</strong> {{ plant.watering_frequency|default:"Not provided" }}</p>
+          <p><strong>Age:</strong> {{ plant.age }}</p>
+          <p><strong>Location:</strong> {{ plant.location }}</p>
+        </div>
+        <section class="care-panel">
+          <h2>Care tips</h2>
+          <p>{{ plant.care_tips|linebreaksbr }}</p>
+        </section>
+        <div class="owner-card">
+          {% if plant.owner.profile.image %}
+            <img src="{{ plant.owner.profile.image.url }}" alt="">
+          {% else %}
+            <span class="owner-avatar" aria-hidden="true">{{ plant.owner.username|first|upper }}</span>
+          {% endif %}
+          <div>
+            <span class="eyebrow">Shared by</span>
+            <a class="owner-profile-link" href="{% url 'profile_detail' plant.owner_id %}">{{ plant.owner.username }}</a>
+            {% if plant.owner.profile.city %}<p>{{ plant.owner.profile.city }}</p>{% endif %}
+          </div>
+        </div>
+        {% if user.is_authenticated and user.pk == plant.owner_id %}
+          <p class="owner-notice">This is your plant listing.</p>
+        {% else %}
+          {% if user.is_authenticated %}
+            {% if plant.status == "AVAILABLE" %}
+              <form method="post" action="{% url 'request_adoption' plant.pk %}" class="adoption-action-form">
+                {% csrf_token %}
+                <button class="button button-dark" type="submit">Adopt Plant</button>
+              </form>
+            {% elif plant.status == "PENDING" %}
+              {% if my_adoption_request.status == "PENDING" %}
+                <p class="owner-notice">Your adoption request is pending with the owner.</p>
+              {% else %}
+                <p class="owner-notice">This plant already has an adoption request under review.</p>
+              {% endif %}
+            {% else %}
+              <p class="owner-notice">This plant has been adopted.</p>
+            {% endif %}
+          {% else %}
+            <a class="button button-dark" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Log in to Adopt Plant</a>
+          {% endif %}
+          <a class="button button-dark" href="{% url 'contact_owner' plant.pk %}">Contact owner</a>
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'toggle_favorite' plant.pk %}" class="favorite-action-form">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="button button-favorite" type="submit">
+                {% if is_favorite %}♥ Saved — remove{% else %}♥ Save plant{% endif %}
+              </button>
+            </form>
+          {% else %}
+            <a class="text-link" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Log in to save this plant</a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <section class="plant-reviews">
+      <h2>Adoption reviews</h2>
+      {% if can_review %}
+        <form method="post" action="{% url 'leave_review' plant.pk %}" class="review-form">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <button class="button button-dark" type="submit">Leave review</button>
+        </form>
+      {% elif has_reviewed %}
+        <p class="review-note">You’ve already reviewed this adoption.</p>
+      {% endif %}
+      <div class="review-list">
+        {% for review in reviews %}
+          <article class="review-card">
+            <div class="review-card-heading">
+              <strong>
+                {% for star in "12345" %}
+                  {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                {% endfor %}
+              </strong>
+              <span>{{ review.rating }} / 5</span>
+            </div>
+            <p>{{ review.comment|linebreaksbr }}</p>
+            <a href="{% url 'profile_detail' review.user_id %}">{{ review.user.username }}</a>
+          </article>
+        {% empty %}
+          <p class="review-note">No reviews yet.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+{% endblock %}
